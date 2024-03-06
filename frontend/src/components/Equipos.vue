@@ -6,9 +6,28 @@ export default {
     return {
       equipos: participantes._embedded.participantes,
       mostrarTotalEquipos: false,
-      enfrentamiento: ''
+      enfrentamiento: '',
+      numPartidos: 0
     }
   },
+
+  computed: {
+    estadoEnfrentamiento() {
+      return this.enfrentamiento.includes('Real Madrid') ? 'Partido Real Madrid' : '....'
+    },
+    avisoPartidos() {
+      return this.numPartidos > 5? `Has generado ${this.numPartidos}` : 'Aún no has generado más de 5 partidos aleatorios'
+    }
+  },
+
+  watch: {
+    numPartidos(nuevoValor, antiguoValor) {
+      if (nuevoValor === 15) {
+        this.$router.push({ name: 'home' })
+      }
+    }
+  },
+
   methods: {
     calcularEnfrentamiento() {
       if (this.equipos.length >= 2) {
@@ -33,10 +52,10 @@ export default {
 
 <template>
   <div class="container">
-    <h1 class="titulo mt-4">EQUIPOS</h1>
-    <ul>
+    <h1 :class=" {'titulo-rojo': equipos.length > 19, 'titulo-azul':equipos.length <= 19, 'mt-3': true }">EQUIPOS</h1>
+    <ul :style="{ fontSize: equipos.length > 10 ? '14px' : '18px'}">
       <li v-for="equipo in equipos" :key="equipo.id">
-        {{ equipo.nombre }}
+        <a :href="equipo._links.self.href">{{ equipo.nombre }}</a>
       </li>
       <div>
         <button type="button" class="btn btn-info me-3 mb-3" @click="mostrarTotalEquipos = !mostrarTotalEquipos">Numero de
@@ -59,10 +78,21 @@ export default {
       </div>
 
     </ul>
+    <h2>{{ estadoEnfrentamiento }}</h2>
+    <h2>{{ avisoPartidos }}</h2>
+    <h2>{{ numPartidos }}</h2>
   </div>
 </template>
 
 <style scoped>
+.titulo-rojo {
+  color:red;
+}
+
+.titulo-azul {
+  color: blue;
+}
+
 .container {
   display: flex;
   flex-direction: column;
