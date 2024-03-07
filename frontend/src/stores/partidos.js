@@ -35,5 +35,13 @@ export const usePartidosStore = defineStore('partidos', {
       }
     },
 
+    reiniciarGoles(partidoId){
+      const partidoIndex = this.partidos.findIndex(p => p._links.self.href === partidoId)
+      if (partidoIndex !== -1){
+        this.partidos[partidoIndex].golesLocal = 0
+        this.partidos[partidoIndex].golesVisitante = 0
+      }
+    }
+
   }
 })

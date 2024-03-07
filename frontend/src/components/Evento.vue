@@ -1,7 +1,7 @@
 <script>
 export default {
-  props: ['partidosss'],
-  emits: ['incrementar-goles-local', 'incrementar-goles-visitante'],
+  props: ['partidosss' ],
+  emits: ['incrementar-goles-local', 'incrementar-goles-visitante', 'resetear-goles'],
   // data() {
   //   return {
   //     golesLocal: 0,
@@ -13,12 +13,17 @@ export default {
     incrementarGolesLocal() {
       // console.log("Incrementando goles local: ", this.golesLocal)
       // this.golesLocal++
+      console.log("Evento desde componente hijo: ", this.partidosss._links.self.href)
       this.$emit('incrementar-goles-local', this.partidosss._links.self.href)
     },
 
     incrementarGolesVisitante() {
       // this.golesVisitante++
       this.$emit('incrementar-goles-visitante', this.partidosss._links.self.href)
+    },
+
+    resetearGoles() {
+      this.$emit('resetear-goles', this.partidosss._links.self.href)
     }
   }
 }
@@ -45,8 +50,10 @@ export default {
       <font-awesome-icon :icon="['fas', 'futbol']" class="icono-fontawesome me-3"  size="xl" style="color: #ed333b;" />
     </span>
    <h1>{{ partidosss.golesLocal }} | {{ partidosss.golesVisitante }}</h1>
-
-
+   
+   <span @click="resetearGoles">
+   <font-awesome-icon :icon="['fas', 'arrows-spin']" class="icono-fontawesome me-3" size="xl"/>
+  </span>
 
 
     </div>

@@ -17,7 +17,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(usePartidosStore, ['actualizarGoles']),
+    ...mapActions(usePartidosStore, ['actualizarGoles', 'reiniciarGoles']),
 
     incrementarGolesLocal(partidoHref) {
       console.log("Estamos en listaeventos.vue: ", partidoHref)
@@ -26,6 +26,10 @@ export default {
 
     incrementarGolesVisitante(partidoHref) {
       this.actualizarGoles(partidoHref, 0, 1)
+    },
+
+    resetearGoles(partidoHref){
+      this.reiniciarGoles(partidoHref)
     }
   }
 
@@ -48,6 +52,7 @@ export default {
       :partidosss="partido"
       @incrementar-goles-local="incrementarGolesLocal"
       @incrementar-goles-visitante="incrementarGolesVisitante"
+      @resetear-goles="resetearGoles"
       ></Evento>
     </li>
   </ul>
