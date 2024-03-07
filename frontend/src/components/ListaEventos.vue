@@ -1,11 +1,12 @@
 <script>
-import partidos from '@/assets/partidos.json'
+// import partidos from '@/assets/partidos.json'
 import Evento from '@/components/Evento.vue'
+import Formulario from '@/components/Formulario.vue'
 import { mapState, mapActions } from 'pinia'
 import { usePartidosStore } from '@/stores/partidos'
 
 export default {
-  components: { Evento },
+  components: { Evento, Formulario },
   // data() {
   //   return {
   //     eventos: partidos._embedded.partidos
@@ -45,6 +46,7 @@ export default {
 <template>
 <div class="container">
   <h1 class="titulo p-4">EVENTOS</h1>
+  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Añadir</button>
   <!-- <ul>
     <li v-for="partido in eventos">
       {{ partido.idLocal }} VS {{ partido.idVisitante }}
@@ -64,6 +66,32 @@ export default {
   </ul>
 
 </div>
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <Formulario></Formulario>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 </template>
 
