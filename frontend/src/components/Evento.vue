@@ -1,7 +1,7 @@
 <script>
 export default {
-  props: ['partidosss' ],
-  emits: ['incrementar-goles-local', 'incrementar-goles-visitante', 'resetear-goles'],
+  props: ['partidosss'],
+  emits: ['incrementar-goles-local', 'incrementar-goles-visitante', 'resetear-goles', 'eliminar-partido'],
   // data() {
   //   return {
   //     golesLocal: 0,
@@ -36,24 +36,41 @@ export default {
       Champions League
     </div>
     <div class="card-body">
-      <h3>{{ partidosss.idLocal }} VS {{ partidosss.idVisitante }}</h3>
+
+      <div class="container text-center">
+        <div class="row justify-content-end">
+          <div class="col-4">
+            <h3>{{ partidosss.idLocal }} VS {{ partidosss.idVisitante }}</h3>
+          </div>
+          <div class="col-4">
+
+
+
+
+
+            <font-awesome-icon :icon="['fas', 'trash']" class="icono-fontawesome me-3" size="xl"
+            @click="$emit('eliminar-partido', partidosss._links.self.href)"/>
+         
+         
+         
+         
+         
+          </div>
+        </div>
+      </div>
       <p>Fecha del partido: {{ new Date(partidosss.timestamp).toLocaleDateString() }}</p>
-     
-     
+      <span @click="incrementarGolesLocal">
+        <font-awesome-icon :icon="['fas', 'futbol']" class="icono-fontawesome me-3" size="xl" />
+      </span>
 
+      <span @click="incrementarGolesVisitante">
+        <font-awesome-icon :icon="['fas', 'futbol']" class="icono-fontawesome me-3" size="xl" style="color: #ed333b;" />
+      </span>
+      <h1>{{ partidosss.golesLocal }} | {{ partidosss.golesVisitante }}</h1>
 
-    <span @click="incrementarGolesLocal">
-      <font-awesome-icon :icon="['fas', 'futbol']" class="icono-fontawesome me-3" size="xl" />
-    </span>
-
-    <span @click="incrementarGolesVisitante">
-      <font-awesome-icon :icon="['fas', 'futbol']" class="icono-fontawesome me-3"  size="xl" style="color: #ed333b;" />
-    </span>
-   <h1>{{ partidosss.golesLocal }} | {{ partidosss.golesVisitante }}</h1>
-   
-   <span @click="resetearGoles">
-   <font-awesome-icon :icon="['fas', 'arrows-spin']" class="icono-fontawesome me-3" size="xl"/>
-  </span>
+      <span @click="resetearGoles">
+        <font-awesome-icon :icon="['fas', 'arrows-spin']" class="icono-fontawesome me-3" size="xl" />
+      </span>
 
 
     </div>

@@ -12,10 +12,10 @@ import * as bootstrap from 'bootstrap'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUser, faFutbol, faArrowsSpin } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faFutbol, faArrowsSpin, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faUser, faInstagram, faXTwitter, faFutbol, faArrowsSpin)
+library.add(faUser, faInstagram, faXTwitter, faFutbol, faArrowsSpin, faTrash)
 
 const pinia = createPinia()
 

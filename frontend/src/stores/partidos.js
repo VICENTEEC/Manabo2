@@ -20,6 +20,11 @@ export const usePartidosStore = defineStore('partidos', {
     },
 
     eliminarPartido(partidoId) {
+      console.log("Estouy en el store: ", partidoId)
+      const partidoIndex = this.partidos.findIndex(p => p._links.self.href === partidoId)
+      if(partidoIndex !== -1) {
+        this.partidos.splice(partidoIndex,1)
+      }
 
     },
 
