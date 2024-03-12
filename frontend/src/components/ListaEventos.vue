@@ -4,9 +4,17 @@ import Evento from '@/components/Evento.vue'
 import Formulario from '@/components/Formulario.vue'
 import { mapState, mapActions } from 'pinia'
 import { usePartidosStore } from '@/stores/partidos'
+import { Modal } from 'bootstrap'
 
 export default {
   components: { Evento, Formulario },
+  data() {
+    return {
+      partidoAEditar: '',
+      editando: false
+    }
+  },
+
   // data() {
   //   return {
   //     eventos: partidos._embedded.partidos
@@ -18,7 +26,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(usePartidosStore, ['actualizarGoles', 'reiniciarGoles', 'eliminarPartido', 'anadirPartido']),
+    ...mapActions(usePartidosStore, ['actualizarGoles', 'reiniciarGoles', 'eliminarPartido', 'anadirPartido', 'actualizarPartido']),
 
     incrementarGolesLocal(partidoHref) {
       console.log("Estamos en listaeventos.vue: ", partidoHref)
@@ -41,6 +49,21 @@ export default {
     enviarFormulario(partido){
       console.log("Datos recibidos del formulario: ", partido)
       this.anadirPartido(partido)
+    },
+
+    editarPartido(partido) {
+      console.log("Partido para editar: ", partido)
+      this.partidoAEditar = partido
+      this.editando = true
+      let modalElement = this.$refs.formularioModal
+      let bsModal = new Modal(modalElement)
+      bsModal.show()
+    },
+
+    actualizarFormulario(partidoActualizado) {
+      console.log("Actualizando partido: ", partidoActualizado)
+      this.actualizarPartido(partidoActualizado)
+
     }
   }
 
@@ -66,6 +89,7 @@ export default {
       @incrementar-goles-visitante="incrementarGolesVisitante"
       @resetear-goles="resetearGoles"
       @eliminar-partido="borrarPartido"
+      @editar-partido="editarPartido"
       ></Evento>
     </li>
   </ul>
@@ -78,7 +102,8 @@ export default {
 
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
+<div class="modal fade" id="staticBackdrop" ref="formularioModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -87,7 +112,10 @@ export default {
       </div>
       <div class="modal-body">
         <Formulario
+          :partido="partidoAEditar"
+          :editando="editando"
           @formulario-relleno="enviarFormulario"
+          @formulario-actualizado="actualizarFormulario"
         ></Formulario>
       </div>
       <div class="modal-footer">

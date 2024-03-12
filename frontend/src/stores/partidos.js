@@ -45,8 +45,17 @@ export const usePartidosStore = defineStore('partidos', {
 
     },
 
-    actualizarPartido(partidoId, nuevoPartido) {
-
+    actualizarPartido(partidoId) {
+      console.log("Desde el store, partidoActualizado", partidoId)
+      const index = this.partidos.findIndex(p => p._links.self.href === partidoId.url)
+      console.log("Desde el store, indice de partidoActualizado", index)
+      if (index !== -1) {
+        this.partidos[index].idLocal = partidoId.idLocal
+        this.partidos[index].idVisitante = partidoId.idVisitante
+        this.partidos[index].golesLocal = partidoId.golesLocal
+        this.partidos[index].golesVisitante = partidoId.golesVisitante
+        this.partidos[index].timestamp = partidoId.timestamp
+      }
     },
 
     actualizarGoles(partidoId, golesLocal, golesVisitante) {

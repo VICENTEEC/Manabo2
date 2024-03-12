@@ -1,6 +1,7 @@
 <script>
 export default {
-  emits: ['formulario-relleno'],
+  props: ['partido', 'editando'],
+  emits: ['formulario-relleno', 'formulario-actualizado'],
   data() {
     return {
       idLocal: '',
@@ -8,6 +9,21 @@ export default {
       golesLocal: null,
       golesVisitante: null,
       timestamp: ''
+    }
+  },
+
+  watch: {
+    partido: {
+      inmedite: true,
+      handler(nuevoValor) {
+        if (nuevoValor) {
+          this.idLocal = nuevoValor.idLocal
+          this.idVisitante = nuevoValor.idVisitante
+          this.golesLocal = nuevoValor.golesLocal
+          this.golesVisitante = nuevoValor.golesVisitante
+          this.timestamp = nuevoValor.timestamp
+        }
+      }
     }
   },
 
@@ -21,7 +37,17 @@ export default {
         golesVisitante: this.golesVisitante,
         timestamp: this.timestamp
       }
-      this.$emit('formulario-relleno', nuevoObjetoPartido)
+
+      // Solamente añadimos la URL si estamos editando uun partido y la propiedad existe
+      if(this.editando && this.partido._links.self.href) {
+        nuevoObjetoPartido.url = this.partido._links.self.href
+      }
+
+      if (this.editando) {
+        this.$emit('formulario-actualizado', nuevoObjetoPartido)
+      } else {
+        this.$emit('formulario-relleno', nuevoObjetoPartido)
+      }
     }
   }
 }
@@ -46,14 +72,14 @@ export default {
     </div>
     <div class="col-md-6">
       <label for="golesLocal" class="form-label">Goles Local</label>
-      <input type="text" class="form-control" id="golesLocal" v-model="golesLocal" required>
+      <input type="number" class="form-control" id="golesLocal" v-model="golesLocal" required>
       <div class="valid-feedback">
         Looks good!
       </div>
     </div>
     <div class="col-md-6">
       <label for="golesVisitante" class="form-label">Goles Visitante</label>
-      <input type="text" class="form-control" id="golesVisitante" v-model="golesVisitante" required>
+      <input type="number" class="form-control" id="golesVisitante" v-model="golesVisitante" required>
       <div class="valid-feedback">
         Looks good!
       </div>
