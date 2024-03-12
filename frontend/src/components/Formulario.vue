@@ -1,48 +1,72 @@
+<script>
+export default {
+  emits: ['formulario-relleno'],
+  data() {
+    return {
+      idLocal: '',
+      idVisitante: '',
+      golesLocal: null,
+      golesVisitante: null,
+      timestamp: ''
+    }
+  },
+
+  methods: {
+
+    enviarFormulario() {
+      const nuevoObjetoPartido = {
+        idLocal: this.idLocal,
+        idVisitante: this.idVisitante,
+        golesLocal: this.golesLocal,
+        golesVisitante: this.golesVisitante,
+        timestamp: this.timestamp
+      }
+      this.$emit('formulario-relleno', nuevoObjetoPartido)
+    }
+  }
+}
+
+</script>
+
 <template>
-    <form class="row g-3 needs-validation" novalidate>
-  <div class="col-md-6">
-    <label for="validationCustom01" class="form-label">First name</label>
-    <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
-    <div class="valid-feedback">
-      Looks good!
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label for="validationCustom02" class="form-label">Last name</label>
-    <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
-    <div class="valid-feedback">
-      Looks good!
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label for="validationCustomUsername" class="form-label">Username</label>
-    <div class="input-group has-validation">
-      <span class="input-group-text" id="inputGroupPrepend">@</span>
-      <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-      <div class="invalid-feedback">
-        Please choose a username.
+  <form @submit.prevent="enviarFormulario" class="row g-3 needs-validation" novalidate>
+    <div class="col-md-6">
+      <label for="idLocal" class="form-label">Equipo Local</label>
+      <input type="text" class="form-control" id="idLocal" v-model="idLocal" required>
+      <div class="valid-feedback">
+        Looks good!
       </div>
     </div>
-  </div>
-  <div class="col-md-6">
-    <label for="validationCustom03" class="form-label">City</label>
-    <input type="text" class="form-control" id="validationCustom03" required>
-    <div class="invalid-feedback">
-      Please provide a valid city.
+    <div class="col-md-6">
+      <label for="idVisitante" class="form-label">Equipo Visitante</label>
+      <input type="text" class="form-control" id="idVisitante" v-model="idVisitante" required>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
     </div>
-  </div>
-  <div class="col-md-6">
-    <label for="validationCustom04" class="form-label">State</label>
-    <select class="form-select" id="validationCustom04" required>
-      <option selected disabled value="">Choose...</option>
-      <option>...</option>
-    </select>
-    <div class="invalid-feedback">
-      Please select a valid state.
+    <div class="col-md-6">
+      <label for="golesLocal" class="form-label">Goles Local</label>
+      <input type="text" class="form-control" id="golesLocal" v-model="golesLocal" required>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
     </div>
-  </div>
-  <div class="col-6">
-    <button class="btn btn-primary" type="submit">Submit form</button>
-  </div>
-</form>
+    <div class="col-md-6">
+      <label for="golesVisitante" class="form-label">Goles Visitante</label>
+      <input type="text" class="form-control" id="golesVisitante" v-model="golesVisitante" required>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="timestamp" class="form-label">Fecha-Hora</label>
+      <input type="datetime-local" class="form-control" id="timestamp" v-model="timestamp" required>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit">Submit form</button>
+    </div>
+  </form>
 </template>

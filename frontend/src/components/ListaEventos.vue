@@ -18,7 +18,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(usePartidosStore, ['actualizarGoles', 'reiniciarGoles', 'eliminarPartido']),
+    ...mapActions(usePartidosStore, ['actualizarGoles', 'reiniciarGoles', 'eliminarPartido', 'anadirPartido']),
 
     incrementarGolesLocal(partidoHref) {
       console.log("Estamos en listaeventos.vue: ", partidoHref)
@@ -36,6 +36,11 @@ export default {
     borrarPartido(partidoHref){
       console.log("partido a eliminar: ", partidoHref)
       this.eliminarPartido(partidoHref)
+    },
+
+    enviarFormulario(partido){
+      console.log("Datos recibidos del formulario: ", partido)
+      this.anadirPartido(partido)
     }
   }
 
@@ -81,7 +86,9 @@ export default {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <Formulario></Formulario>
+        <Formulario
+          @formulario-relleno="enviarFormulario"
+        ></Formulario>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

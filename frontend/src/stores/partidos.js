@@ -16,7 +16,24 @@ export const usePartidosStore = defineStore('partidos', {
 
   actions: {
     anadirPartido(partido) {
-
+      console.log("en el store, lo que recibe: ", partido)
+      const nuevoHref = `http://pruebaapi1-lonchezas.b4a.run/api/partidos/${this.partidos.length + 1}`
+      const partidoConLinks = {
+        ...partido,
+        _links: { 
+          self: {
+            href: nuevoHref
+          },
+          partido: {
+            href: nuevoHref
+          },
+          sucesos: {
+            href: `${nuevoHref}/sucesos`
+          }
+        }
+      }
+      // this.partidos.push(partidoConLinks)
+      this.partidos.unshift(partidoConLinks)
     },
 
     eliminarPartido(partidoId) {
