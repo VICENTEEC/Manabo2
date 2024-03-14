@@ -38,6 +38,13 @@ const router = createRouter({
     routes,
 })
 
+import { useAuthStore } from '@/stores/auth'
+router.beforeEach(async (to, from) => {  
+  const auth = useAuthStore()
+  if (!auth.esAdmin && (to.name === 'listaeventos' || to.name === 'equipos' || to.name === 'entradas')) {
+    return { name: 'home' }
+  }
+})
 
 const app = createApp(App)
 

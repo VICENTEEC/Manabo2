@@ -1,3 +1,26 @@
+<script>
+import { useAuthStore } from '@/stores/auth'
+import { mapState, mapActions } from 'pinia'
+
+export default {
+  computed: {
+    ...mapState(useAuthStore, ['tipoUsuario', 'esAdmin']),
+
+    cambioUsuario: {
+      get() {
+        return this.esAdmin
+      },
+      set(value) {
+        this.cambiarNivel()
+      }
+    }
+  },
+  methods: {
+    ...mapActions(useAuthStore, ['cambiarNivel'])
+  }
+}
+</script>
+
 <template>
 <nav class="navbar navbar-expand-lg bg-amarillo">
   <div class="container-fluid">
@@ -17,6 +40,10 @@
           <router-link class="nav-link" to="/entradas">Entradas</router-link>
         </li>
       </ul>
+    </div>
+    <div class="form-check form-switch form-check-reverse">
+      <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse"  v-model="cambioUsuario">
+      <label class="form-check-label" for="flexSwitchCheckReverse">{{ tipoUsuario }}</label>
     </div>
   </div>
 </nav>
