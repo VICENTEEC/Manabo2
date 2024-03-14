@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { getPartidos, postPartidos, deleteEntidad } from "@/stores/api-service.js"
+import { getPartidos, postPartidos, deleteEntidad, putEntidad } from "@/stores/api-service.js"
 
 export const usePartidosAPIStore = defineStore("partidosAPI", {
   state: () => ({
@@ -61,7 +61,30 @@ export const usePartidosAPIStore = defineStore("partidosAPI", {
     },
 
     async actualizarGoles(partidoId, golesLocal, golesVisitante) {
+      console.log("En el store, actualizando goles: ", partidoId, golesLocal, golesVisitante)
+      const partidoIndex = this.partidos.findIndex(p => p._links.self.href === partidoId)
+      if (partidoIndex !== -1) {
+        try {
+          const datosActualizados = {
+            idLocal: this.partidos[partidoIndex].idLocal,
+            idVisitante: this.partidos[partidoIndex].idVisitante,
+            golesLocal: this.partidos[partidoIndex].golesLocal + golesLocal,
+            golesVisitante: this.partidos[partidoIndex].golesVisitante + golesVisitante,
+          }
 
+          const response = await putEntidad(this.partidos[partidoIndex]._links.self.href, datosActualizados)
+
+          if (response.status === 200) {
+            this.partidos[partidoIndex].golesLocal = datosActualizados.golesLocal
+            this.partidos[partidoIndex].golesVisitante = datosActualizados.golesVisitante
+            console.log("Goles actualizados en API y en el store", partidoId)
+          } else {
+            console.error("la petición PUT no fue exitosa")
+          }
+        } catch (error) {
+          console.error("Error: ", error)
+        }
+      }
     },
 
     async reiniciarGoles(partidoId) {

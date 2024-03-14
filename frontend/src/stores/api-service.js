@@ -34,3 +34,7 @@ export function deleteEntidad(entidad) {
   console.log("En apiservice, antes de delete: ", entidad)
   return llamadaAPI("delete", null, cambiarHttpPorHttps(entidad))
 }
+
+export function putEntidad(entidad, data) {
+  return llamadaAPI("put", data, cambiarHttpPorHttps(entidad))
+}
