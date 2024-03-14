@@ -46,9 +46,19 @@ export default {
       this.eliminarPartido(partidoHref)
     },
 
+    abrirModalNuevoPartido() {
+    this.partidoAEditar = { idLocal: '', idVisitante: '', golesLocal: 0, golesVisitante: 0}
+    this.editando = false
+    let modalElement = this.$refs.formularioModal
+    let bsModal = new Modal(modalElement)
+    bsModal.show()
+    },
+
     enviarFormulario(partido){
       console.log("Datos recibidos del formulario: ", partido)
       this.anadirPartido(partido)
+      this.editando = false
+      this.partidoAEditar = null
     },
 
     editarPartido(partido) {
@@ -63,10 +73,15 @@ export default {
     actualizarFormulario(partidoActualizado) {
       console.log("Actualizando partido: ", partidoActualizado)
       this.actualizarPartido(partidoActualizado)
+      this.editando = false
+      this.partidoAEditar = null
+    },
 
-    }
+    resetearPartidoyEditando() {
+    this.editando = false
+    this.partidoAEditar = null
   }
-
+  },
 }
 
 </script>
@@ -74,7 +89,8 @@ export default {
 <template>
 <div class="container">
   <h1 class="titulo p-4">EVENTOS</h1>
-  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Añadir</button>
+  <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Añadir</button> -->
+  <button type="button" class="btn btn-success" @click="abrirModalNuevoPartido">Añadir</button>
   <!-- <ul>
     <li v-for="partido in eventos">
       {{ partido.idLocal }} VS {{ partido.idVisitante }}
@@ -108,7 +124,8 @@ export default {
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="resetearPartidoyEditando"></button>
       </div>
       <div class="modal-body">
         <Formulario
