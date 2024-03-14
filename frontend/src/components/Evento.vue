@@ -65,7 +65,8 @@ export default {
           </div>
         </div>
       </div>
-      <p>Fecha del partido: {{ new Date(partidosss.timestamp).toLocaleDateString() }}</p>
+      <!-- DEJAR COMENTADO CUANDO VAYA A TRABAJAR CON LOS DATOS DE LA API, PORQUE NO EXISTE LA PROPIEDAD FECHA-HORA -->
+      <!-- <p>Fecha del partido: {{ new Date(partido.timestamp).toLocaleDateString() }}</p> -->
       <span @click="incrementarGolesLocal">
         <font-awesome-icon :icon="['fas', 'futbol']" class="icono-fontawesome me-3" size="xl" />
       </span>

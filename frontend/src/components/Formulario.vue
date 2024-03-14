@@ -8,7 +8,7 @@ export default {
       idVisitante: '',
       golesLocal: null,
       golesVisitante: null,
-      timestamp: ''
+      // timestamp: ''
     }
   },
 
@@ -21,7 +21,7 @@ export default {
           this.idVisitante = nuevoValor.idVisitante
           this.golesLocal = nuevoValor.golesLocal
           this.golesVisitante = nuevoValor.golesVisitante
-          this.timestamp = nuevoValor.timestamp
+          // this.timestamp = nuevoValor.timestamp
         }
       }
     }
@@ -35,7 +35,7 @@ export default {
         idVisitante: this.idVisitante,
         golesLocal: this.golesLocal,
         golesVisitante: this.golesVisitante,
-        timestamp: this.timestamp
+        // timestamp: this.timestamp
       }
 
       // Solamente añadimos la URL si estamos editando uun partido y la propiedad existe
@@ -84,13 +84,13 @@ export default {
         Looks good!
       </div>
     </div>
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
       <label for="timestamp" class="form-label">Fecha-Hora</label>
       <input type="datetime-local" class="form-control" id="timestamp" v-model="timestamp" required>
       <div class="valid-feedback">
         Looks good!
       </div>
-    </div>
+    </div> -->
     <div class="col-12">
       <button class="btn btn-primary" type="submit">Submit form</button>
     </div>

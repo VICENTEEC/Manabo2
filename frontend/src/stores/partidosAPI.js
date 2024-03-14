@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import { getPartidos } from "@/stores/api-service.js";
+import { defineStore } from "pinia"
+import { getPartidos, postPartidos } from "@/stores/api-service.js"
 
 export const usePartidosAPIStore = defineStore("partidosAPI", {
   state: () => ({
@@ -16,19 +16,29 @@ export const usePartidosAPIStore = defineStore("partidosAPI", {
 
   actions: {
     async cargarPartidos() {
-      this.partidosCargados = false;
+      this.partidosCargados = false
       await getPartidos().then((response) => {
         if (response.data._embedded) {
-          const partidos = response.data._embedded.partidos;
-          this.partidos = partidos;
+          const partidos = response.data._embedded.partidos
+          this.partidos = partidos
         }
-        this.partidosCargados = true;
-        console.log("En el store: ", this.partidos);
-      });
+        this.partidosCargados = true
+        console.log("En el store: ", this.partidos)
+      })
     },
 
     async anadirPartido(nuevoPartido) {
-
+      console.log("En el store, lo que recibe: ", nuevoPartido)
+      try {
+        const responsePartidos = await postPartidos(nuevoPartido)
+        console.log("La respuesta de la API es: ", responsePartidos)
+        if (responsePartidos.status === 200) {
+          const partidoAgregado = { ...nuevoPartido, _links: responsePartidos.data._links }
+          this.partidos.unshift(partidoAgregado)
+        }
+      } catch (error) {
+        console.error("Error: ", error)
+      }
     },
 
     async eliminarPartido(partidoId) {
@@ -47,4 +57,4 @@ export const usePartidosAPIStore = defineStore("partidosAPI", {
       
     },
   },
-});
+})
