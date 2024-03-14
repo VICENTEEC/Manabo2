@@ -42,10 +42,6 @@ export const usePartidosAPIStore = defineStore("partidosAPI", {
     },
 
     async eliminarPartido(partidoId) {
-
-    },
-
-    async eliminarPartido(partidoId) {
       console.log("En el store, lo que recibe: ", partidoId)
       try {
         const response = await deleteEntidad(partidoId)
@@ -57,6 +53,34 @@ export const usePartidosAPIStore = defineStore("partidosAPI", {
         }
       } catch (error) {
         console.error("Error: ", error)
+      }
+    },
+
+    async actualizarPartido(partidoId) {
+      console.log("Desde el store, partido a actualizar", partidoId)
+      const index = this.partidos.findIndex(p => p._links.self.href === partidoId.url)
+      console.log("Desde el store, índice del partido a actualizar", index)
+      if (index !== -1) {
+        try {
+          const datosActualizados = {
+            idLocal: partidoId.idLocal,
+            idVisitante: partidoId.idVisitante,
+            golesLocal: partidoId.golesLocal,
+            golesVisitante: partidoId.golesVisitante
+          }
+          const response = await putEntidad(this.partidos[index]._links.self.href, datosActualizados)
+
+          if (response.status === 200) {
+            this.partidos[index] = { ...this.partidos[index], ...datosActualizados }
+            console.log("Partido actualizado correctamente en el store", partidoId.url)
+          } else {
+            console.error("Error al actualizar el partido")
+          }
+        } catch (error) {
+          console.error("Error: ", error)
+        }
+      } else {
+        console.log("Partido no encontrado")
       }
     },
 
