@@ -18,10 +18,19 @@ function llamadaAPI(method, body, path) {
   return axios.request(config)
 }
 
+export function cambiarHttpPorHttps(enlace) {
+  return enlace.replace('http', 'https')
+}
+
 export function getPartidos() {
   return llamadaAPI("get", null, API_PARTIDOS)
 }
 
 export function postPartidos(data) {
   return llamadaAPI("post", data, API_PARTIDOS)
+}
+
+export function deleteEntidad(entidad) {
+  console.log("En apiservice, antes de delete: ", entidad)
+  return llamadaAPI("delete", null, cambiarHttpPorHttps(entidad))
 }
