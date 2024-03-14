@@ -111,8 +111,32 @@ export const usePartidosAPIStore = defineStore("partidosAPI", {
       }
     },
 
+    // MALA PRÁCTICA. HABRÍA QUE REUTILIZAR el código de actualizarGoles ¡¡¡Y NO HACER reiniciarGoles!!!
     async reiniciarGoles(partidoId) {
+      const partidoIndex = this.partidos.findIndex(p => p._links.self.href === partidoId)
+      if (partidoIndex !== -1) {
+        try {
+          const datosActualizados = {
+            idLocal: this.partidos[partidoIndex].idLocal,
+            idVisitante: this.partidos[partidoIndex].idVisitante,
+            golesLocal: 0,
+            golesVisitante: 0
+          }
 
-    },
+          const response = await putEntidad(this.partidos[partidoIndex]._links.self.href, datosActualizados)
+
+          if (response.status === 200) {
+            this.partidos[partidoIndex] = { ...this.partidos[partidoIndex], ...datosActualizados }
+            console.log("Goles reiniciados en el store", partidoId)
+          } else {
+            console.error("error al reiniciar los goles.")
+          }
+        } catch (error) {
+          console.error("Error: ", error)
+        }
+      } else {
+        console.log("Partido no encontrado")
+      }
+    }
   },
 })
