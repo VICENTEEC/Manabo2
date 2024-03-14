@@ -37,6 +37,9 @@ export default {
           <router-link class="nav-link" to="/listaeventos">Lista Eventos</router-link>
         </li>
         <li class="nav-item">
+          <router-link class="nav-link" to="/listaeventosAPI">Lista Eventos API</router-link>
+        </li>
+        <li class="nav-item">
           <router-link class="nav-link" to="/entradas">Entradas</router-link>
         </li>
       </ul>

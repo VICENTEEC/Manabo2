@@ -1,5 +1,5 @@
-import { defineStore } from "pinia"
-import { getPartidos } from "@/stores/api-service.js"
+import { defineStore } from "pinia";
+import { getPartidos } from "@/stores/api-service.js";
 
 export const usePartidosAPIStore = defineStore("partidosAPI", {
   state: () => ({
@@ -12,22 +12,39 @@ export const usePartidosAPIStore = defineStore("partidosAPI", {
     // })),
   }),
 
-  getters: {
-
-  },
+  getters: {},
 
   actions: {
     async cargarPartidos() {
-      this.partidosCargados = false
+      this.partidosCargados = false;
       await getPartidos().then((response) => {
         if (response.data._embedded) {
-          const partidos = response.data._embedded.partidos
-          this.partidos = partidos
-
+          const partidos = response.data._embedded.partidos;
+          this.partidos = partidos;
         }
-        this.partidosCargados = true
-        console.log("En el store: ", this.partidos)
-      })
+        this.partidosCargados = true;
+        console.log("En el store: ", this.partidos);
+      });
     },
-  }
-})
+
+    async anadirPartido(nuevoPartido) {
+
+    },
+
+    async eliminarPartido(partidoId) {
+
+    },
+
+    async actualizarPartido(partidoId) {
+
+    },
+
+    async actualizarGoles(partidoId, golesLocal, golesVisitante) {
+
+    },
+
+    async reiniciarGoles(partidoId) {
+      
+    },
+  },
+});

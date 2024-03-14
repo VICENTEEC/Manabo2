@@ -23,6 +23,7 @@ const NotFound = () => import('@/components/NotFound.vue')
 const Entradas = () => import('@/components/Entradas.vue')
 const Equipos = () => import('@/components/Equipos.vue')
 const ListaEventos = () => import('@/components/ListaEventos.vue')
+const ListaEventosAPI = () => import('@/components/ListaEventosAPI.vue')
 
 const routes = [
     { path: '/', redirect: '/home'},
@@ -30,6 +31,7 @@ const routes = [
     { path: '/entradas', component: Entradas, name: 'entradas' },
     { path: '/equipos', component: Equipos, name: 'equipos' },
     { path: '/listaeventos', component: ListaEventos, name: 'listaeventos' },
+    { path: '/listaeventosAPI', component: ListaEventosAPI, name: 'listaeventosAPI' },
     { path: '/:pathMatch(.*)', component: NotFound, name: 'notfound'}
 ]
 
@@ -41,7 +43,7 @@ const router = createRouter({
 import { useAuthStore } from '@/stores/auth'
 router.beforeEach(async (to, from) => {  
   const auth = useAuthStore()
-  if (!auth.esAdmin && (to.name === 'listaeventos' || to.name === 'equipos' || to.name === 'entradas')) {
+  if (!auth.esAdmin && (to.name === 'listaeventos' || to.name === 'listaeventosAPI' || to.name === 'entradas')) {
     return { name: 'home' }
   }
 })
