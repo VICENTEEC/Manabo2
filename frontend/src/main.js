@@ -3,6 +3,10 @@ import App from '@/App.vue'
 import Home from '@/components/Home.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { createPinia } from 'pinia'
+import PrimeVue from 'primevue/config'
+import 'primevue/resources/themes/aura-light-green/theme.css'
+import ConfirmationService from 'primevue/confirmationservice'
+import ToastService from 'primevue/toastservice'
 
 // Import our custom CSS
 import '@/scss/styles.scss'
@@ -53,6 +57,9 @@ const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router)
 app.use(pinia)
+app.use(PrimeVue)
+app.use(ConfirmationService)
+app.use(ToastService)
 
 app.mount('#app')
 
