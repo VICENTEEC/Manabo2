@@ -3,12 +3,16 @@ import Calendar from 'primevue/calendar'
 import Button from 'primevue/button'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
+import TreeSelect from 'primevue/treeselect'
+import { NodeService } from '@/assets/NodeService';
 
 export default {
-  components: { Calendar, Button, ConfirmDialog, Toast },
+  components: { Calendar, Button, ConfirmDialog, Toast, TreeSelect },
   data() {
     return {
-      date: null
+      date: null,
+      nodes: null,
+      selectedValue: null,
     }
   },
 
@@ -46,7 +50,10 @@ export default {
         }
       });
     }
-  }
+  },
+  mounted() {
+        NodeService.getTreeNodes().then((data) => (this.nodes = data));
+    }
 }
 </script>
 
@@ -75,4 +82,8 @@ export default {
     <Button @click="confirm1()" label="Save" outlined></Button>
     <Button @click="confirm2()" label="Delete" severity="danger" outlined></Button>
   </div>
+
+  <div class="card flex justify-content-center">
+        <TreeSelect v-model="selectedValue" :options="nodes" placeholder="Select Item" class="md:w-20rem w-full" />
+    </div>
 </template>
